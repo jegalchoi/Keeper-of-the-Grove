@@ -1,7 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  subject(:user) { build(:user) }
+  subject(:user) do
+    User.create!(
+      username: "camchoi",
+      email: "test@email.com",
+      password: "password"
+    )
+  end
 
   it { should validate_presence_of(:username) }
   it { should validate_uniqueness_of(:username) }
@@ -13,18 +19,27 @@ RSpec.describe User, type: :model do
   invalid_addresses.each do |address|
     it { should_not allow_value(address).for(:email) }
   end
-  
+
   it { should validate_length_of(:password).is_at_least(6).allow_nil }
+
+  it "creates a password digest when a password is given" do
+    expect(user.password_digest).to_not be_nil
+  end
 
   it do
     should validate_presence_of(:password_digest).
     with_message('Password cannot be blank.')
   end
 
+  it "creates a session token before validation" do
+    user.valid?
+    expect(user.session_token).to_not be_nil
+  end
+
   describe "password encryption" do
     it "does not save passwords to the database" do
-      create(:user, username: 'jaychoi')
-      user = User.find_by(username: 'jaychoi')
+      create(:user, username: 'camchoi', password: 'password')
+      user = User.find_by(username: 'camchoi')
       expect(user.password).not_to be ('password')
     end
 
@@ -35,7 +50,13 @@ RSpec.describe User, type: :model do
   end
 
   describe "class methods" do
-    subject(:user) { create(:user) }
+    subject(:user) do
+      User.create!(
+        username: "camchoi",
+        email: "test@email.com",
+        password: "password"
+      )
+    end
 
     describe "::find_by_credentials" do
       it "should find user by credentials" do
@@ -92,10 +113,6 @@ RSpec.describe User, type: :model do
         user.reset_session_token!
         expect(user.session_token).to_not be_nil
       end
-
-      
     end
-  
   end
-
 end

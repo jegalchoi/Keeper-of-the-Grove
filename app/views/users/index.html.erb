@@ -1,3 +1,5 @@
-<h1>Users</h1>
+<h1>Keepers</h1>
 
-<%= render @users %>
+<% @users.each do |user| %>
+  <a href="<%= user_url(user) %>"><%= user.username %></a>
+<% end %>

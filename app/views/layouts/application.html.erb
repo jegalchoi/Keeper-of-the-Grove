@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>KeeperOfTheGrove</title>
+    <title>Keeper of the Grove</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,27 @@
   </head>
 
   <body>
+  <header>
+    <h1>Keeper of the Grove</h1>
+    
+    <% if flash[:notices] %>
+      <% flash[:notices].each do |notice| %>
+        <p><b><%= notice %></b></p>
+      <% end %>
+    <% end %>
+
+    <% if logged_in? %>
+      <%= link_to current_user.username, user_url(current_user) %>
+      <form action="<%= session_url %>" method="POST">
+        <input type="hidden" name="authenticity_token" value="form_authenticity_token">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" value="Log Out">
+      </form>
+    <% else %>
+      <p><%= link_to 'Sign Up', new_user_url %></p>
+      <p><%= link_to 'Log In', new_session_url %></p>
+    <% end %>
+  </header>
     <%= yield %>
   </body>
 </html>

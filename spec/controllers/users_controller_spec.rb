@@ -1,7 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  subject(:user) { create(:user) }
+  subject(:user) do
+    User.create!(
+      username: "camchoi",
+      email: "test@email.com",
+      password: "password"
+    )
+  end
 
   describe "GET #index" do
     it "renders the index template" do

@@ -1,18 +1,28 @@
-<h1>Sign Up</h1>
+<h2>Sign Up</h2>
 
-<%= form_for(@user) do |f| %>
-  <%= f.label :username %>
-  <%= f.text_field :username %>
+<%= render 'shared/errors' %>
+
+<form action="<%= users_url %>" method="POST">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  
+  <label>Username: 
+    <input type="text" name="user[username]" value="<%= @user.username %>">
+  </label>
+  <br>
+  
+  <label>Email: 
+    <input type="email" name="user[email]" value="<%= @user.email %>"> 
+  </label>
   <br>
 
-  <%= f.label :email %>
-  <%= f.email_field :email %>
+  <label>Password: 
+    <input type="password" name="user[password]"> 
+  </label>
   <br>
 
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-  <br>
+  <input type="submit" value="Sign Up"> 
+</form>
+<br>
 
-  <%= f.submit "Submit" %>
-<% end %>
+<a href="<%= new_session_url %>">Log In!</a>
 

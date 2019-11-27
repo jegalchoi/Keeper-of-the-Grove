@@ -16,12 +16,6 @@ FactoryBot.define do
     username { Faker::Internet.user_name }
     email { Faker::Internet.email }
     password = 'password'
-    password_digest { BCrypt::Password.create(password) }
-    session_token { User.generate_session_token }
-
-    factory :jaychoi do
-      username { 'jaychoi' }
-    end
   end
   
 end
