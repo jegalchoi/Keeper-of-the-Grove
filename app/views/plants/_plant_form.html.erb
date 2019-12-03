@@ -3,7 +3,7 @@
 
 <%= render 'shared/errors' %>
 
-<form action="<%= action %>" method="POST">
+<form action="<%= action %>" method="POST" enctype="multipart/form-data">
   <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   <% if action_type == :edit %>
     <input type="hidden" name="_method" value="PUT">
@@ -29,6 +29,11 @@
   </label>
   <label>Public: 
     <input type="radio" name="plant[private]" value=false <%= plant.private == false ? "checked" : "" %>>
+  </label>
+  <br>
+
+  <label> Images: 
+    <input type="file" name="plant[images][]" multiple="multiple" accept="image/jpeg,image/gif,image/png"> 
   </label>
   <br>
 

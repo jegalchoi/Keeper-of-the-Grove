@@ -8,6 +8,14 @@
   <p><%= @plant.notes %></p>
 <% end %>
 
+<% if @plant.images.attached? %>
+  <p>
+    <% @plant.images.each do |image| %>
+      <%= image_tag(image) %>
+    <% end %>
+  </p>
+<% end %>
+
 
 <form action="<%= plant_url(@plant) %>" method="POST">
   <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">

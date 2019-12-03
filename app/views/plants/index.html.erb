@@ -5,6 +5,13 @@
     <% if !(plant.private) %>
       <li>
         <a href="<%= user_url(plant.user_id) %>"><%= plant.name %></a>
+        <% if plant.images.attached? %>
+          <p>
+            <% plant.images.each do |image| %>
+              <%= image_tag(image) %>
+            <% end %>
+          </p>
+        <% end %>
       </li>
     <% end %>
   <% end %>

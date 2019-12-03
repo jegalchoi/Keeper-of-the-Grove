@@ -3,7 +3,7 @@ class PlantsController < ApplicationController
   before_action :require_owner!, only: [:edit, :update, :destroy]
 
   def index
-    @plants = Plant.all
+    @plants = Plant.with_attached_images
   end
 
   def show
@@ -68,7 +68,7 @@ class PlantsController < ApplicationController
   private
 
   def plant_params
-    params.require(:plant).permit(:name, :notes, :water, :private, :user_id)
+    params.require(:plant).permit(:name, :notes, :water, :private, :user_id, images: [])
   end
 
   def find_plant_by_params_id

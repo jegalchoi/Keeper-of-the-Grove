@@ -3,11 +3,20 @@
 <div class="user-plants">
   <ul>
     <% @user.plants.each do |plant| %>
+      <% if plant.images.attached? %>
+        <p>
+          <% plant.images.each do |image| %>
+            <%= image_tag(image) %>
+          <% end %>
+        </p>
+      <% end %>
+
       <% if @user.id != current_user_id && !(plant.private) %>
         <li>
           <%= plant.name %>
         </li>
       <% end %>
+      
       <% if @user.id == current_user_id %>
         <li>
           <a href="<%= plant_url(plant) %>"><%= plant.name %></a>

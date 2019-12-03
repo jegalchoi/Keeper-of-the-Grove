@@ -22,6 +22,9 @@ class Plant < ApplicationRecord
     class_name: :User,
     foreign_key: :user_id
 
+  has_many_attached :images
+  scope :with_eager_loaded_images, -> { eager_load(images_attachments: :blog) }
+
   def last_watered
     if water
       time_ago_in_words(water)
