@@ -1,0 +1,36 @@
+<% action = (action_type == :new) ? plants_url : plant_url(plant) %>
+<% button_text = (action_type == :new) ? "New Plant" : "Update Plant" %>
+
+<%= render 'shared/errors' %>
+
+<form action="<%= action %>" method="POST">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <% if action_type == :edit %>
+    <input type="hidden" name="_method" value="PUT">
+  <% end %>
+
+  <label>Name: 
+    <input type="text" name="plant[name]" value="<%= plant.name %>">
+  </label>
+  <br>
+
+  <label>Last Watered: 
+    <input type="date" name="plant[water]" value="<%= plant.water %>">
+  </label>
+  <br>
+
+  <label>Notes:
+    <textarea name="plant[notes]"><%= plant.notes %></textarea>
+  </label>
+  <br>
+
+  <label>Private: 
+    <input type="radio" name="plant[private]" value=true <%= plant.private == true ? "checked" : "" %>>
+  </label>
+  <label>Public: 
+    <input type="radio" name="plant[private]" value=false <%= plant.private == false ? "checked" : "" %>>
+  </label>
+  <br>
+
+  <input type="submit" value="<%= button_text %>">
+</form>

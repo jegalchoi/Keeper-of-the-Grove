@@ -1,0 +1,11 @@
+<h2>Plants</h2>
+
+<ul>
+  <% @plants.each do |plant| %>
+    <% if !(plant.private) %>
+      <li>
+        <a href="<%= user_url(plant.user_id) %>"><%= plant.name %></a>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

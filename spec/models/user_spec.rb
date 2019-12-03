@@ -36,6 +36,10 @@ RSpec.describe User, type: :model do
     expect(user.session_token).to_not be_nil
   end
 
+  describe "associations" do
+    it { should have_many(:plants) }
+  end
+
   describe "password encryption" do
     it "does not save passwords to the database" do
       create(:user, username: 'camchoi', password: 'password')
